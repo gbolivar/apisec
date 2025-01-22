@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+  <testsuite name="/app/code/phpunit.xml" tests="2" assertions="2" errors="0" failures="0" skipped="0" time="0.062091">
+    <testsuite name="Unit" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.001077">
+      <testsuite name="Tests\Unit\ExampleTest" file="/app/code/tests/Unit/ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.001077">
+        <testcase name="test_that_true_is_true" file="/app/code/tests/Unit/ExampleTest.php" line="12" class="Tests\Unit\ExampleTest" classname="Tests.Unit.ExampleTest" assertions="1" time="0.001077"/>
+      </testsuite>
+    </testsuite>
+    <testsuite name="Feature" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.061014">
+      <testsuite name="Tests\Feature\ExampleTest" file="/app/code/tests/Feature/ExampleTest.php" tests="1" assertions="1" errors="0" failures="0" skipped="0" time="0.061014">
+        <testcase name="test_the_application_returns_a_successful_response" file="/app/code/tests/Feature/ExampleTest.php" line="13" class="Tests\Feature\ExampleTest" classname="Tests.Feature.ExampleTest" assertions="1" time="0.061014"/>
+      </testsuite>
+    </testsuite>
+  </testsuite>
+</testsuites>
