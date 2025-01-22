@@ -22,8 +22,8 @@ services:
         container_name: apisec-web-ba
         hostname: apisec-web-ba
         build:
-            context: ./
-            dockerfile: .docker/php/Dockerfile
+            context: ./.docker/php
+            dockerfile: Dockerfile
         volumes:
             - ./code:/app/code
             - ./code/.env.example:/app/code/.env

@@ -86,7 +86,7 @@ RUN npm install -g yarn
 COPY conf.d/* /usr/local/etc/php/conf.d/
 COPY conf.d/* /usr/local/etc/php-fpm.d/
 
-COPY .env.example /app/code/.env
+#COPY .env.example /app/code/.env
 
 WORKDIR /app/code
 
