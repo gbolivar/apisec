@@ -26,8 +26,7 @@ restart: ## Restart the containers
 	$(MAKE) stop && $(MAKE) start
 
 build: ## Rebuilds all the containers
-	#@docker compose build
-	@docker compose pull
+	@docker compose build
 
 migrate: ## Runs backend commands
 	@docker exec ${MH_BA} php artisan migrate:fresh --seed
