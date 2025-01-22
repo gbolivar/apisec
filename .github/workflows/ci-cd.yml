@@ -1,0 +1,68 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main ]
+    #tags:
+    #  - 'v\d+'
+  #pull_request:
+  #  branches: [ main ]
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository content
+        uses: actions/checkout@v4
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+
+      - name: Build project
+        run: make build
+
+      - name: start server
+        run: make start
+
+      - name: Install dependencies
+        run: make app-run
+  tests:
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run tests
+        run: make app-test
+
+  sonarqube:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Java for SonarQube
+        run: sudo apt-get install -y openjdk-11-jre
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+
+  dependabot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Dependabot metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: ${{ secrets.GIT_TOKEN }}
+
+  postman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run postman tests
+        run: |
+          npm install -g newman
+          newman run https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}

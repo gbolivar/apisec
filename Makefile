@@ -32,12 +32,16 @@ migrate: ## Runs backend commands
 	@docker exec ${MH_BA} php artisan migrate:fresh --seed
 
 app-run: ## Installs composer dependencies
+	@docker exec ${MH_BA} cp .env.example .env
 	@docker exec ${MH_BA} composer install --no-interaction
 	@docker exec ${MH_BA} php artisan key:generate
 	@docker exec ${MH_BA} chown -R :81 storage/app
 	@docker exec ${MH_BA} chmod -R 775 storage/app
 	$(MAKE) migrate
 
+app-test: ## Runs backend tests
+	@docker exec ${MH_BA} php artisan test
+	@docker exec ${MH_BA} vendor/bin/phpunit
 
 logs: ## Rebuilds all the containers
 	@docker compose logs -f
