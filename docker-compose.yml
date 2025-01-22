@@ -22,12 +22,11 @@ services:
         container_name: apisec-web-ba
         hostname: apisec-web-ba
         build:
-            context: ./.docker/php
-            dockerfile: Dockerfile
+            context: ./
+            dockerfile: .docker/php/Dockerfile
         volumes:
             - ./code:/app/code
             - ./code/.env.example:/app/code/.env
-            - ${HOME}/.gitconfig:/home/usuario/.gitconfig
         ports:
             -   "29010:9000"
         depends_on:
