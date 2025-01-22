@@ -26,6 +26,7 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./code:/app/code
+            - ./code/.env.example:/app/code/.env
             - ${HOME}/.gitconfig:/home/usuario/.gitconfig
         ports:
             -   "29010:9000"
