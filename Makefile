@@ -34,7 +34,6 @@ migrate: ## Runs backend commands
 app-run: ## Installs composer dependencies
 	@docker exec ${MH_BA} composer install --no-interaction
 	@docker exec ${MH_BA} php artisan jwt:secret
-	@docker exec ${MH_BA} php artisan key:generate
 	@docker exec ${MH_BA} chown -R :81 storage/app
 	@docker exec ${MH_BA} chmod -R 775 storage/app
 	$(MAKE) migrate
