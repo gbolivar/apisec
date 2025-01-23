@@ -21,6 +21,10 @@ jobs:
         with:
           php-version: '8.2'
 
+      - name: Debug Event
+        run: |
+          echo "Triggered by actor: ${{ github.actor }}"
+
       - name: Generate .env file for laravel
         run: |
           echo "${{ secrets.APP_CONFIG }}" > .env
@@ -35,6 +39,7 @@ jobs:
           echo "DB_USER=${{ secrets.MYSQL_USER }}" >> code/.env
           echo "DB_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> code/.env
           
+
 
       - name: Generate .env file for MySql Docker
         run: |
@@ -72,6 +77,7 @@ jobs:
 
 
       - name: Dependabot metadata
+        if: github.actor == 'dependabot[bot]'
         uses: dependabot/fetch-metadata@v1
         with:
           github-token: ${{ secrets.GIT_TOKEN }}

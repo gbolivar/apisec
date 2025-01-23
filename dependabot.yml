@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: "composer" # Ecosistema de dependencias para PHP/Laravel
+    directory: "code/" # Directorio donde se encuentra el archivo composer.json
+    schedule:
+      interval: "weekly" # Frecuencia de ejecución: daily, weekly, o monthly
+    commit-message:
+      prefix: "composer-update"
+    open-pull-requests-limit: 5 # Límite de PR abiertas al mismo tiempo
