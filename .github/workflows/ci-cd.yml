@@ -21,6 +21,26 @@ jobs:
         with:
           php-version: '8.2'
 
+      - name: Generate .env file for laravel
+        run: |
+          echo "${{ secrets.APP_CONFIG }}" > .env
+          echo "${{ secrets.LOG_CONFIG }}" >> code/.env
+          echo "${{ secrets.MAIL_CONFIG }}" >> code/.env
+          echo "${{ secrets.REDIS_CONFIG }}" >> code/.env
+          echo "${{ secrets.SESSION_CONFIG }}" >> code/.env
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> code/.env
+          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> code/.env
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> code/.env
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> code/.env
+
+      - name: Generate .env file for MySql Docker
+        run: |
+          echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" > .env
+          echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
+          echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
+          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
+
+
       - name: Build project
         run: make build
 
