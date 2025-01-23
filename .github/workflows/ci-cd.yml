@@ -54,7 +54,7 @@ jobs:
       - name: Install dependencies
         run: make app-run
 
-      - name: Exec Migration
+      - name: Exec Migrations
         run: make migrate
   tests:
     needs: setup
