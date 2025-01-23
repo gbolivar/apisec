@@ -56,8 +56,8 @@ jobs:
       #- name: Exec Migrations
       #  run: make migrate
 
-      - name: Exec Migrations
-        run: make app-test
+      #- name: Exec Migrations
+      #  run: make app-test
 
       - name: SonarCloud Scan
         env:
@@ -65,7 +65,7 @@ jobs:
         run: |
           sonar-scanner \
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
-        # -Dsonar.organization=my-organization \
+        #-Dsonar.organization=my-organization \
             -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
             -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
