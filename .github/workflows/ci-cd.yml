@@ -52,6 +52,9 @@ jobs:
 
       - name: Install dependencies
         run: make app-run
+
+      - name: Exec Migration
+        run: make migrate
   tests:
     needs: setup
     runs-on: ubuntu-latest

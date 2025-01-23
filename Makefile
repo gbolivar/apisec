@@ -36,7 +36,6 @@ app-run: ## Installs composer dependencies
 	@docker exec ${MH_BA} php artisan jwt:secret
 	@docker exec ${MH_BA} chown -R :81 storage/app
 	@docker exec ${MH_BA} chmod -R 775 storage/app
-	$(MAKE) migrate
 
 app-test: ## Runs backend tests
 	@docker exec ${MH_BA} php artisan test
