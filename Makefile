@@ -29,7 +29,8 @@ build: ## Rebuilds all the containers
 	@docker compose build
 
 migrate: ## Runs backend commands
-	@docker exec ${MH_BA} php artisan migrate:fresh --seed
+	#@docker exec ${MH_BA} php artisan migrate:fresh --seed
+	@docker exec ${MH_BA} php artisan --force
 
 app-run: ## Installs composer dependencies
 	@docker exec ${MH_BA} composer install --no-interaction
