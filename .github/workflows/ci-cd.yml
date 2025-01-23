@@ -71,11 +71,6 @@ jobs:
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
 
 
-  dependabot:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
       - name: Dependabot metadata
         uses: dependabot/fetch-metadata@v1
         with:
