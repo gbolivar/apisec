@@ -30,6 +30,7 @@ services:
             -   "29010:9000"
         depends_on:
             - apisec-web-db
+            - apisec-web-rd
         networks:
             - apisec-web-network
 

@@ -28,10 +28,13 @@ jobs:
           echo "${{ secrets.MAIL_CONFIG }}" >> code/.env
           echo "${{ secrets.REDIS_CONFIG }}" >> code/.env
           echo "${{ secrets.SESSION_CONFIG }}" >> code/.env
+          echo "DB_CONNECTION=${{ secrets.DB_CONNECTION }}" >> code/.env
+          echo "DB_HOST=${{ secrets.MYSQL_DATABASE }}" >> code/.env
+          echo "DB_PORT=${{ secrets.DB_PORT }}" >> code/.env
           echo "MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> code/.env
           echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> code/.env
           echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> code/.env
-          echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> code/.env
+          
 
       - name: Generate .env file for MySql Docker
         run: |
