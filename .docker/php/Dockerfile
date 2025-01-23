@@ -36,22 +36,22 @@ RUN apt update -y\
     && apt install -y \
     bash-completion \
     tzdata \
-    less \
+    #less \
     multitail \
     curl \
-    git \
+    #git \
     gnupg \
     locales \
-    make \
+    #make \
     sudo \
     unzip \
-    vim \
-    nano \
+    #vim \
+    #nano \
     wget \
     zip \
     unzip \
-    nodejs \
-    npm \
+    #nodejs \
+    #npm \
     && localedef -i es_ES -c -f UTF-8 -A /usr/share/locale/locale.alias es_ES.UTF-8 \
     && true
 
@@ -69,18 +69,18 @@ RUN install-php-extensions \
     gd \
     xml \
     sockets \
-    mongodb \
+    #mongodb \
     && true
 
 # Instalación de dependencias de sistema
 
-RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
+#RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
 ###RUN nvm install 20
 
-RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.39.0/install.sh | bash
+#RUN wget -qO- https://raw.githubusercontent.com/creationix/nvm/v0.39.0/install.sh | bash
 #RUN source ~/.profile
 #RUN pecl install mongodb
-RUN npm install -g yarn
+#RUN npm install -g yarn
 
 
 COPY conf.d/* /usr/local/etc/php/conf.d/
