@@ -59,13 +59,9 @@ jobs:
       #- name: Exec Migrations
       #  run: make app-test
 
-
-  sonarqube:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
       - name: Install Java for SonarQube
         run: sudo apt-get install -y openjdk-11-jre
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@master
         env:
@@ -73,6 +69,7 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECT_KEY }}
           SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+
 
   dependabot:
     needs: setup
