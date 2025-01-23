@@ -58,8 +58,11 @@ jobs:
       - name: Install dependencies
         run: make app-run
 
-      #- name: Exec Migrations
-      #  run: make migrate
+      - name: check db
+        run: ping 10.20.20.4
+
+      - name: Exec Migrations
+        run: make migrate
 
       #- name: Exec Migrations
       #  run: make app-test
