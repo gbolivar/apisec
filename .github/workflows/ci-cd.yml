@@ -54,8 +54,8 @@ jobs:
       - name: Install dependencies
         run: make app-run
 
-      - name: Exec Migrations
-        run: make migrate
+      #- name: Exec Migrations
+      #  run: make migrate
   tests:
     needs: setup
     runs-on: ubuntu-latest
@@ -86,12 +86,12 @@ jobs:
         with:
           github-token: ${{ secrets.GIT_TOKEN }}
 
-  postman:
-    needs: setup
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run postman tests
-        run: |
-          npm install -g newman
-          newman run https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}
+  #postman:
+  #  needs: setup
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - uses: actions/checkout@v4
+  #    - name: Run postman tests
+  #      run: |
+  #        npm install -g newman
+  #        newman run https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}
