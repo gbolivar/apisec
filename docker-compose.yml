@@ -26,7 +26,6 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./code:/app/code
-            - ./code/.env.example:/app/code/.env
         ports:
             -   "29010:9000"
         depends_on:
