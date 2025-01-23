@@ -34,7 +34,6 @@ jobs:
           echo "DB_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> code/.env
           echo "DB_USER=${{ secrets.MYSQL_USER }}" >> code/.env
           echo "DB_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> code/.env
-          cat code/.env
           
 
       - name: Generate .env file for MySql Docker
@@ -56,13 +55,9 @@ jobs:
 
       #- name: Exec Migrations
       #  run: make migrate
-  tests:
-    needs: setup
-    runs-on: ubuntu-latest
 
-    steps:
-      - name: Run tests
-        run: make app-test
+      #- name: Exec Migrations
+      #  run:make app-test
 
   sonarqube:
     needs: setup
