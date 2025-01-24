@@ -82,11 +82,7 @@ jobs:
         with:
           github-token: ${{ secrets.GIT_TOKEN }}
 
-      - name: Compress project
-        run: zip -r api.zip . -x ".git*" "tests*" "*.github*"
 
-      - name: Verify app.zip exists
-        run: ls -lh app.zip
 
 
       - name: Setup SSH
@@ -98,28 +94,23 @@ jobs:
             chmod 600 ~/.ssh/id_rsa.pub
             ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
 
-      - name: Debug SCP Variables
-        run: |
-          echo "User: ${{ secrets.SERVER_USER }}"
-          echo "Host: ${{ secrets.SERVER_IP }}"
-          echo "Port: ${{ secrets.SERVER_PORT }}"
-          echo "Destination: /home/${{ secrets.SERVER_USER }}/app.zip"
+
 
       - name: Copy files to remote server
         run: |
-          scp -P ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r app.zip ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SERVER_USER }}/app.zip
+          scp -P ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SERVER_USER }}/apisec
 
 
-      - name: Execute remote commands
-        run: |
-            ssh -p ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-                unzip -o app.zip -d /var/platform/apisec
-                cd /var/platform/apisec
-                make build
-                make start
-                make app-run
-                make migrate
-                rm -rf app.zip
+      #- name: Execute remote commands
+      #  run: |
+      #      ssh -p ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+      #          unzip -o app.zip -d /var/platform/apisec
+      #          cd /var/platform/apisec
+      #          make build
+      #          make start
+      #          make app-run
+      #          make migrate
+      #          rm -rf app.zip
 
   #postman:
   #  needs: setup
