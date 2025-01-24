@@ -101,10 +101,10 @@ jobs:
           ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
           
           # Transfiere el archivo comprimido
-          scp app.zip $SERVER_USER@$SERVER_IP:/home/$SERVER_USER/app.zip
+          scp -P $SERVER_PORT app.zip $SERVER_USER@$SERVER_IP:/home/$SERVER_USER/app.zip
           
           # Inicia el despliegue en el servidor remoto
-          ssh $SERVER_USER@$SERVER_IP << 'EOF'
+          ssh -p $SERVER_PORT $SERVER_USER@$SERVER_IP << 'EOF'
           unzip -o api.zip -d /var/platform/apisec
           cd /var/platform/apisec
           make build
