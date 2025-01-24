@@ -48,6 +48,11 @@ jobs:
           echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
           echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
 
+      - name: Generate key ssh
+        run: |
+          ssh-keygen -t rsa -b 4096 -C "hello@ironsofts.com
+          cat ~/.ssh/id_rsa.pub
+          
 
       - name: Build project
         run: make build
