@@ -47,12 +47,6 @@ jobs:
           echo "MYSQL_USER=${{ secrets.MYSQL_USER }}" >> .env
           echo "MYSQL_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env
           echo "MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env
-
-      - name: Generate key ssh
-        run: |
-          ssh-keygen -t rsa -b 4096 -C "hello@ironsofts.com
-          pwd
-          #cat ~/.ssh/id_rsa.pub
           
 
       - name: Build project
@@ -64,8 +58,8 @@ jobs:
       - name: Install dependencies
         run: make app-run
 
-      - name: Exec Migrations
-        run: make migrate
+      #- name: Exec Migrations
+      #  run: make migrate
 
       #- name: Exec Migrations
       #  run: make app-test
@@ -87,6 +81,38 @@ jobs:
         uses: dependabot/fetch-metadata@v1
         with:
           github-token: ${{ secrets.GIT_TOKEN }}
+
+      - name: Compress project
+        run: zip -r api.zip . -x ".git*" "tests*" "*.github*"
+
+      - name: Deploy to Donweb
+        env:
+          SSH_KEY: ${{ secrets.KEY_SSH_PRIVATE }}
+          SSH_PUBLIC: ${{ secrets.KEY_SSH_PUBLIC }}
+          SERVER_IP: ${{ secrets.SERVER_IP }}
+          SERVER_PORT: ${{ secrets.SERVER_PORT }}
+          SERVER_USER: ${{ secrets.SERVER_USER }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          echo "$SSH_PUBLIC" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa.pub
+          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
+          
+          # Transfiere el archivo comprimido
+          scp app.zip $SERVER_USER@$SERVER_IP:/home/$SERVER_USER/app.zip
+          
+          # Inicia el despliegue en el servidor remoto
+          ssh $SERVER_USER@$SERVER_IP << 'EOF'
+          unzip -o api.zip -d /var/platform/apisec
+          cd /var/platform/apisec
+          make build
+          make start
+          make app-run
+          make migrate
+          rm -rf api.zip
+          EOF
 
   #postman:
   #  needs: setup
