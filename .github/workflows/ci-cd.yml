@@ -52,7 +52,7 @@ jobs:
         run: |
           ssh-keygen -t rsa -b 4096 -C "hello@ironsofts.com
           pwd
-          cat ~/.ssh/id_rsa.pub
+          #cat ~/.ssh/id_rsa.pub
           
 
       - name: Build project
