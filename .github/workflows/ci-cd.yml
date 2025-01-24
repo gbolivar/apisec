@@ -99,7 +99,7 @@ jobs:
 
       - name: Copy files to remote server
         run: |
-          scp -P $SERVER_PORT -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r app.zip ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/${{SERVER_USER}}/app.zip
+          scp -P ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r app.zip ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/${{secrets.SERVER_USER}}/app.zip
 
 
       - name: Execute remote commands
