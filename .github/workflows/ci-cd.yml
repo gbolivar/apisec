@@ -85,34 +85,33 @@ jobs:
       - name: Compress project
         run: zip -r api.zip . -x ".git*" "tests*" "*.github*"
 
-      - name: Deploy to Donweb
-        env:
-          SSH_KEY: ${{ secrets.KEY_SSH_PRIVATE }}
-          SSH_PUBLIC: ${{ secrets.KEY_SSH_PUBLIC }}
-          SERVER_IP: ${{ secrets.SERVER_IP }}
-          SERVER_PORT: ${{ secrets.SERVER_PORT }}
-          SERVER_USER: ${{ secrets.SERVER_USER }}
+
+
+      - name: Setup SSH
         run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_KEY" > ~/.ssh/id_rsa
-          echo "$SSH_PUBLIC" > ~/.ssh/id_rsa.pub
-          chmod 600 ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa.pub
-          ssh-keyscan -H $SERVER_IP >> ~/.ssh/known_hosts
-          
-          # Transfiere el archivo comprimido
-          scp -P $SERVER_PORT app.zip $SERVER_USER@$SERVER_IP:/home/$SERVER_USER/app.zip
-          
-          # Inicia el despliegue en el servidor remoto
-          ssh -p $SERVER_PORT $SERVER_USER@$SERVER_IP << 'EOF'
-          unzip -o api.zip -d /var/platform/apisec
-          cd /var/platform/apisec
-          make build
-          make start
-          make app-run
-          make migrate
-          rm -rf api.zip
-          EOF
+            mkdir -p ~/.ssh
+            echo "${{ secrets.KEY_SSH_PRIVATE }}" > ~/.ssh/id_rsa 
+            echo "${{ secrets.KEY_SSH_PUBLIC }}" > ~/.ssh/id_rsa.pub
+            chmod 600 ~/.ssh/id_rsa
+            chmod 600 ~/.ssh/id_rsa.pub
+            ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+
+
+      - name: Copy files to remote server
+        run: |
+          scp -P $SERVER_PORT -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r app.zip ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/${{SERVER_USER}}/app.zip
+
+
+      - name: Execute remote commands
+        run: |
+            ssh -p ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+                unzip -o app.zip -d /var/platform/apisec
+                cd /var/platform/apisec
+                make build
+                make start
+                make app-run
+                make migrate
+                rm -rf app.zip
 
   #postman:
   #  needs: setup
