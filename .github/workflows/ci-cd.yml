@@ -58,9 +58,6 @@ jobs:
       - name: Install dependencies
         run: make app-run
 
-      - name: check db
-        run: ping 10.20.20.4
-
       - name: Exec Migrations
         run: make migrate
 
