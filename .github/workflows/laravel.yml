@@ -16,14 +16,21 @@ jobs:
       with:
         php-version: '8.3'
     - uses: actions/checkout@v4
+
     - name: Cd into Laravel directory
-      run: cd ./src
+      run: |
+        ls -lsa .
+        cd ./src
 
     - name: Copy .env
-      run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      run: |
+        ls -lsa .
+        php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Install Dependencies
-      run: composer install --no-dev --optimize-autoloader --no-interaction
+      run: |
+        ls -lsa .
+        composer install --no-dev --optimize-autoloader --no-interaction
 
     - name: Generate key
       run: php artisan key:generate
