@@ -52,4 +52,4 @@ jobs:
         DB_DATABASE: database/database.sqlite
       run: |
         cd ./src
-        php artisan test
+        php vendor/bin/phpunit  --testdox
