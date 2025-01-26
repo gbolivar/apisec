@@ -19,31 +19,26 @@ jobs:
 
     - name: Copy .env
       run: |
-        cd ./src
         php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Install Dependencies
       run: |
-        ls -lsa .
         cd ./src
         composer install --no-interaction --prefer-dist
         
 
     - name: Generate key
       run: |
-        ls -lsa .
         cd ./src
         php artisan key:generate
 
     - name: Directory Permissions
       run: |
-        ls -lsa .
         cd ./src
         chmod -R 777 storage bootstrap/cache
 
     - name: Create Database
       run: |
-        cd ./src
         mkdir -p database
         touch database/database.sqlite
 
@@ -54,3 +49,15 @@ jobs:
       run: |
         cd ./src
         php vendor/bin/phpunit  --testdox
+
+
+    - name: Install Java for SonarQube
+      run: sudo apt-get install -y openjdk-11-jre
+
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@master
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECT_KEY }}
+        SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
