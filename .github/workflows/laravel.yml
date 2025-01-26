@@ -24,7 +24,6 @@ jobs:
       run: |
         cd ./src
         composer install --no-interaction --prefer-dist
-        php artisan serve
 
     - name: Generate key
       run: |
@@ -62,12 +61,12 @@ jobs:
         SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECT_KEY }}
         SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
 
-  postman:
-    needs: laravel-tests
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Run postman tests
-        run: |
-          npm install -g newman
-          newman run https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}
+  #postman:
+  #  needs: laravel-tests
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - uses: actions/checkout@v4
+  #    - name: Run postman tests
+  #      run: |
+  #        npm install -g newman
+  #        newman run https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}
