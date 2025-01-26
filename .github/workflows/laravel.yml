@@ -24,7 +24,7 @@ jobs:
       run: |
         cd ./src
         composer install --no-interaction --prefer-dist
-        
+        php artisan serve --port 80
 
     - name: Generate key
       run: |
@@ -38,9 +38,9 @@ jobs:
 
     - name: Create Database
       run: |
+        cd ./src
         mkdir -p database
         touch database/database.sqlite
-        php artisan serve --port 80
 
     - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
       env:
