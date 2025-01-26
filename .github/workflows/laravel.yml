@@ -106,10 +106,20 @@ jobs:
       - name: Execute remote commands
         run: |
             ssh -p ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-                mv /home/${{ secrets.SERVER_USER }}/apisec /var/platform/apisec
+                rsync -azP /home/${{ secrets.SERVER_USER }}/apisec/ /var/platform/apisec/
                 cd /var/platform/apisec
                 make build
                 make start
                 make app-run
                 make migrate
+                rm -rf /home/${{ secrets.SERVER_USER }}/apisec
             EOF
+
+
+  zap_scan:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run ZAP Scan
+        run: |
+          docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:29010 -g gen.conf -r zap-report.html
