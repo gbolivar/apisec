@@ -8,9 +8,7 @@ on:
 
 jobs:
   laravel-tests:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
       with:
@@ -62,3 +60,13 @@ jobs:
         SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECT_KEY }}
         SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
+
+  postman:
+    needs: laravel-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run postman tests
+        run: |
+          npm install -g newman
+          newman run https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}
