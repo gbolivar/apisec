@@ -101,3 +101,15 @@ jobs:
       - name: Copy files to remote server
         run: |
           scp -P ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SERVER_USER }}/apisec
+
+
+      - name: Execute remote commands
+        run: |
+            ssh -p ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
+                mv /home/${{ secrets.SERVER_USER }}/apisec /var/platform/apisec
+                cd /var/platform/apisec
+                make build
+                make start
+                make app-run
+                make migrate
+            EOF
