@@ -34,7 +34,7 @@ jobs:
         chmod -R 777 storage bootstrap/cache
         mkdir -p database
         touch database/database.sqlite
-        php vendor/bin/phpunit  --testdox
+        php artisan test
 
     #- name: Generate key
     #  run: |
