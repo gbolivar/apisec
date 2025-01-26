@@ -61,12 +61,16 @@ jobs:
         SONAR_PROJECTKEY: ${{ secrets.SONAR_PROJECT_KEY }}
         SONAR_ORGANIZATION: ${{ secrets.SONAR_ORGANIZATION }}
 
-  #postman:
-  #  needs: laravel-tests
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #    - uses: actions/checkout@v4
-  #    - name: Run postman tests
-  #      run: |
-  #        npm install -g newman
-  #        newman run https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}
+  deploy:
+    needs: laravel-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.KEY_SSH_PRIVATE }}" > ~/.ssh/id_rsa 
+          echo "${{ secrets.KEY_SSH_PUBLIC }}" > ~/.ssh/id_rsa.pub
+          chmod 600 ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa.pub
+          ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
