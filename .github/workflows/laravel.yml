@@ -19,6 +19,7 @@ jobs:
 
     - name: Copy .env
       run: |
+        cd ./src
         php -r "file_exists('.env') || copy('.env.example', '.env');"
 
     - name: Install Dependencies
