@@ -22,34 +22,42 @@ jobs:
         cd ./src
         php -r "file_exists('.env') || copy('.env.example', '.env');"
 
-    - name: Install Dependencies
-      run: |
-        ls -lsa .
-        cd ./src
-        composer install --no-dev --optimize-autoloader --no-interaction
-
-    - name: Generate key
-      run: |
-        ls -lsa .
-        cd ./src
-        php artisan key:generate
-
-    - name: Directory Permissions
-      run: |
-        ls -lsa .
-        cd ./src
-        chmod -R 777 storage bootstrap/cache
-
-    - name: Create Database
-      run: |
-        cd ./src
-        mkdir -p database
-        touch database/database.sqlite
-
-    - name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
+    - name: Install Dependencies, Generate key, and Set Permissions
       env:
         DB_CONNECTION: sqlite
         DB_DATABASE: database/database.sqlite
       run: |
+        ls -lsa .
         cd ./src
+        composer install --no-dev --optimize-autoloader --no-interaction
+        php artisan key:generate
+        chmod -R 777 storage bootstrap/cache
+        mkdir -p database
+        touch database/database.sqlite
         php vendor/bin/phpunit  --testdox
+
+    #- name: Generate key
+    #  run: |
+    #    ls -lsa .
+    #    cd ./src
+    #    php artisan key:generate
+
+    #- name: Directory Permissions
+    #  run: |
+    #    ls -lsa .
+    #    cd ./src
+    #    chmod -R 777 storage bootstrap/cache
+
+    #- name: Create Database
+    #  run: |
+    #    cd ./src
+    #    mkdir -p database
+    #    touch database/database.sqlite
+
+    #- name: Execute tests (Unit and Feature tests) via PHPUnit/Pest
+    #  env:
+    #    DB_CONNECTION: sqlite
+    #    DB_DATABASE: database/database.sqlite
+    #  run: |
+    #    cd ./src
+    #    php vendor/bin/phpunit  --testdox
