@@ -24,7 +24,7 @@ jobs:
       run: |
         cd ./src
         composer install --no-interaction --prefer-dist
-        php artisan serve --port 80
+        php artisan serve
 
     - name: Generate key
       run: |
