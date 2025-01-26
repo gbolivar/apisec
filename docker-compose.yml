@@ -39,7 +39,7 @@ services:
     apisec-web-db:
       image: mysql:8.0.25
       restart: "unless-stopped"
-      container_name:
+      container_name: apisec-web-db
       hostname: apisec-web-db
       env_file:
         - ./.env
