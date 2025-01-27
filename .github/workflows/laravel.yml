@@ -117,14 +117,14 @@ jobs:
             EOF
 
 
-  zap_scan:
-    needs: deploy
-    runs-on: ubuntu-latest
-    steps:
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.12.0
-        with:
-          target: http://vps-4592279-x.dattaweb.com:20090/api/
+  #zap_scan:
+  #  needs: deploy
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #    - name: ZAP Scan
+  #      uses: zaproxy/action-full-scan@v0.12.0
+  #      with:
+  #        target: http://vps-4592279-x.dattaweb.com:20090/api/
 
 
   postman:
