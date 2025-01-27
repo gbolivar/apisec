@@ -88,6 +88,6 @@ COPY conf.d/* /usr/local/etc/php-fpm.d/
 
 #COPY .env.example /app/code/.env
 
-WORKDIR /app/code
+WORKDIR /app/src
 
-USER root
+USER www-data
