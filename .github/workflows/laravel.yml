@@ -120,6 +120,7 @@ jobs:
     needs: deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Run ZAP Scan
-        run: |
-          docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap-baseline.py -t http://vps-4592279-x.dattaweb.com:20090 -g gen.conf -r zap-report.html
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.12.0
+        with:
+          target: http://vps-4592279-x.dattaweb.com:20090
