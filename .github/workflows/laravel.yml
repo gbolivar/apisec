@@ -98,7 +98,7 @@ jobs:
           echo "DB_USER=${{ secrets.MYSQL_USER }}" >> .env
           echo "DB_PASSWORD=${{ secrets.MYSQL_PASSWORD }}" >> .env          
 
-      - name: Copy files to remote server
+      - name: Copy files to remote server db
         run: |
           scp -P ${{ secrets.SERVER_PORT }} -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r . ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:/home/${{ secrets.SERVER_USER }}/apisec
 
