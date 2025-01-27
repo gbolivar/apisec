@@ -97,6 +97,7 @@ jobs:
           echo "DB_DATABASE=${{ secrets.MYSQL_DATABASE }}" >> .env
           echo "DB_USER=${{ secrets.MYSQL_USER }}" >> .env
           echo "DB_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}" >> .env          
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env          
 
       - name: Copy files to remote server db
         run: |
