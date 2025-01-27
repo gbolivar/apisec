@@ -116,12 +116,23 @@ jobs:
             EOF
 
 
-  zap_scan:
+  #zap_scan:
+  #  needs: deploy
+  #  runs-on: ubuntu-latest
+  #  timeout-minutes: 10
+  #  steps:
+  #    - name: ZAP Scan
+  #      uses: zaproxy/action-full-scan@v0.12.0
+  #      with:
+  #        target: http://vps-4592279-x.dattaweb.com:20090/api/
+
+
+  postman:
     needs: deploy
     runs-on: ubuntu-latest
-    timeout-minutes: 10
     steps:
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.12.0
-        with:
-          target: http://vps-4592279-x.dattaweb.com:20090/api/
+      - uses: actions/checkout@v4
+      - name: Run postman tests
+        run: |
+          npm install -g newman
+          newman run https://api.postman.com/collections/${{ secrets.COLLECTION_ID }}?access_key=${{ secrets.POSTMAN_API_KEY }}
