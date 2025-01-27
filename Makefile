@@ -35,8 +35,10 @@ migrate: ## Runs backend commands
 app-run: ## Installs composer dependencies
 	@docker exec ${MH_BA} composer install --no-dev --optimize-autoloader --no-interaction
 	@docker exec ${MH_BA} php artisan jwt:secret
-	@docker exec ${MH_BA} chown -R :81 storage/app
-	@docker exec ${MH_BA} chmod -R 775 storage/*
+	@docker exec ${MH_BA} chmod -R 775 storage/
+	@docker exec ${MH_BA} chown -R www-data:www-data storage storage/
+	@docker exec ${MH_BA} chmod -R 775 storage bootstrap/cache
+	@docker exec ${MH_BA} chown -R www-data:www-data storage bootstrap/cache
 
 app-test: ## Runs backend tests
 	@docker exec ${MH_BA} php artisan test
