@@ -3,9 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Dto\UserRegisterDto;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -53,8 +55,17 @@ class User extends Authenticatable implements JWTSubject
         return $this->getKey();
     }
 
-    public function getJWTCustomClaims()
+    public function getJWTCustomClaims(): array
     {
         return [];
+    }
+
+    public static function register(UserRegisterDto $userRegisterDto): self
+    {
+        return User::create([
+            'name'     => $userRegisterDto->getName(),
+            'email'    => $userRegisterDto->getEmail(),
+            'password' => Hash::make($userRegisterDto->getPassword()),
+        ]);
     }
 }
