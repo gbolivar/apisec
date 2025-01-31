@@ -8,8 +8,9 @@ Route::get('/', function () {
     return 'Hello World';
 });
 
-Route::post('register', [RegisterUserController::class, '__invoke']);
-Route::post('login', [LoginUserController::class, '__invoke']);
+
+Route::post('register', [RegisterUserController::class, '__invoke'])->middleware('throttle:custom_limit');
+Route::post('login', [LoginUserController::class, '__invoke'])->middleware('throttle:custom_limit');
 
 Route::middleware('auth:api')->group(function () {
     Route::post('logout', [LogoutUserController::class, '__invoke']);
