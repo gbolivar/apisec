@@ -135,7 +135,7 @@ jobs:
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
             -DDsonar.sources=./src
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.exclusions=./src/vendor/**, ./src/public/**, ./src/tests/**, ./src/resources/**
+            -Dsonar.exclusions=./src/vendor/**,./src/storage/**,./src/node_modules/**,./src/public/**,./src/tests/**
             -Dsonar.php.tests.reportPath=storage/tests-reports/phpunit.xml
             -Dsonar.php.coverage.reportPaths=storage/tests-reports/coverage.xml
 
