@@ -17,11 +17,9 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE'],
-    'allowed_origins' => ['https://venezuelahackingteam.com:20090/api/', 'http://localhost:20090'],
+    'allowed_methods' => ['GET', 'POST', 'PUT'],
+    'allowed_origins' => ['https://venezuelahackingteam.com', 'http://localhost'],
     'allowed_origins_patterns' => [],
-    'allowed_headers' => ['Content-Type', 'Authorization', 'X-Requested-With'],
-    'exposed_headers' => [],
     'max_age' => 600,
     'supports_credentials' => false,
 
