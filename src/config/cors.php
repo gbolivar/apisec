@@ -17,18 +17,12 @@ return [
 
     'paths' => ['api/*', 'sanctum/csrf-cookie'],
 
-    'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['*'],
-
+    'allowed_methods' => ['GET', 'POST', 'PUT', 'DELETE'],
+    'allowed_origins' => ['http://vps-4592279-x.dattaweb.com', 'http://localhost:20090'],
     'allowed_origins_patterns' => [],
-
-    'allowed_headers' => ['*'],
-
+    'allowed_headers' => ['Content-Type', 'Authorization', 'X-Requested-With'],
     'exposed_headers' => [],
-
-    'max_age' => 0,
-
+    'max_age' => 600,
     'supports_credentials' => false,
 
 ];
