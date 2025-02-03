@@ -131,10 +131,9 @@ jobs:
         with:
           args: >
             -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }}
-            -Dsonar.projectKey=gbolivar_apisec
             -DDsonar.sources=./src
             -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }}
-            -Dsonar.exclusions=vendor/**,storage/**,node_modules/**
+            -Dsonar.exclusions=./src/vendor/**, ./src/storage/**, bootstrap/**, ./src/public/**, ./src/database/**, ./src/tests/**, ./src/resources/**
             -Dsonar.php.tests.reportPath=storage/tests-reports/phpunit.xml
             -Dsonar.php.coverage.reportPaths=storage/tests-reports/coverage.xml
 
