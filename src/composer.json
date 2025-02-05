@@ -12,6 +12,8 @@
         "tymon/jwt-auth": "^2.1"
     },
     "require-dev": {
+        "roave/security-advisories": "dev-latest"
+        ,
         "fakerphp/faker": "^1.23",
         "friendsofphp/php-cs-fixer": "^3.68",
         "laravel/pail": "^1.1",
